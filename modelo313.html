@@ -225,6 +225,73 @@
             border: 1px solid var(--success);
         }
 
+        .process-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .process-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .process-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .process-btn:not(:disabled):active {
+            transform: translateY(0);
+        }
+
+        .start-process {
+            background-color: var(--success);
+            color: var(--light-text);
+        }
+
+        .start-process:not(:disabled):hover {
+            background-color: #2ecc71;
+        }
+
+        .end-process {
+            background-color: var(--secondary);
+            color: var(--light-text);
+            font-size: 1.3rem;
+            padding: 20px;
+        }
+
+        .end-process:not(:disabled):hover {
+            background-color: var(--secondary-light);
+        }
+
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
         .button-group {
             display: flex;
             gap: 15px;
@@ -233,17 +300,16 @@
 
         button {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
-            box-shadow: var(--shadow);
         }
 
         button:disabled {
@@ -262,12 +328,12 @@
         }
 
         .requestBtn {
-            background-color: var(--primary);
+            background-color: var(--primary-light);
             color: var(--light-text);
         }
 
         .requestBtn:not(:disabled):hover {
-            background-color: var(--primary-light);
+            background-color: var(--primary);
         }
 
         .stopBtn {
@@ -356,6 +422,10 @@
                 flex-direction: column;
             }
             
+            .process-controls {
+                flex-direction: column;
+            }
+            
             .header h1 {
                 font-size: 1.5rem;
             }
@@ -364,13 +434,17 @@
                 font-size: 1rem;
             }
             
-            button {
+            button, .process-btn {
                 padding: 12px;
             }
             
             .operator-btn {
                 padding: 10px 15px;
                 font-size: 0.9rem;
+            }
+            
+            .timer-display {
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -417,11 +491,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a1" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a1" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a1" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a1" class="process-btn start-process" onclick="startProcess('A1', 'Eixos')">
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a1" class="process-btn end-process" onclick="endProcess('A1', 'Eixos')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -448,11 +534,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a2" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a2" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a2" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a2" class="process-btn start-process" onclick="startProcess('A2', 'Chassi')" disabled>
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a2" class="process-btn end-process" onclick="endProcess('A2', 'Chassi')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -479,11 +577,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a3" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a3" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a3" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a3" class="process-btn start-process" onclick="startProcess('A3', 'Lanternas')" disabled>
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a3" class="process-btn end-process" onclick="endProcess('A3', 'Lanternas')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -510,11 +620,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a4" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a4" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a4" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a4" class="process-btn start-process" onclick="startProcess('A4', 'Assoalho')" disabled>
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a4" class="process-btn end-process" onclick="endProcess('A4', 'Assoalho')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -541,11 +663,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a5" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a5" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a5" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a5" class="process-btn start-process" onclick="startProcess('A5', 'Rodas')" disabled>
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a5" class="process-btn end-process" onclick="endProcess('A5', 'Rodas')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -572,11 +706,23 @@
             
             <div class="content">
                 <div class="status-container">
-                    <span class="status-label">Status da Solicitação</span>
-                    <div id="status-a6" class="status inactive">
+                    <span class="status-label">Status do Processo</span>
+                    <div id="process-status-a6" class="status inactive">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solicitação inativa</span>
+                        <span>Processo não iniciado</span>
                     </div>
+                    <div id="timer-a6" class="timer-display" style="display: none;">
+                        00:00:00
+                    </div>
+                </div>
+                
+                <div class="process-controls">
+                    <button id="start-process-a6" class="process-btn start-process" onclick="startProcess('A6', 'Teto')" disabled>
+                        <i class="fas fa-play-circle"></i> Iniciar Processo
+                    </button>
+                    <button id="end-process-a6" class="process-btn end-process" onclick="endProcess('A6', 'Teto')" disabled>
+                        <i class="fas fa-stop-circle"></i> Finalizar Processo
+                    </button>
                 </div>
                 
                 <div class="button-group">
@@ -594,182 +740,243 @@
     </div>
 
     <footer>
-        Sistema de Solicitação de Peças • Desenvolvido por Erick Matheus • FORMARE 2025
+        <p>MDC System - Desenvolvido para a Disciplina de Processo de Produção</p>
+        <p>© 2023 - Todos os direitos reservados</p>
     </footer>
 
-<script>
-    // Objeto para armazenar os alertas ativos de cada operador
-    const activeAlerts = {
-        'A1': null,
-        'A2': null,
-        'A3': null,
-        'A4': null,
-        'A5': null,
-        'A6': null
-    };
+   <script>
+        const API_BASE = 'https://banco.pythonanywhere.com';
+        const MODEL = '313';
+        let timers = {};
+        let startTimes = {};
 
-    let pollInterval;
-
-    function showOperator(operatorId) {
-        // Esconder todas as páginas
-        document.querySelectorAll('.operator-page').forEach(page => {
-            page.classList.remove('active');
-        });
-        
-        // Mostrar a página selecionada
-        document.getElementById(operatorId).classList.add('active');
-        
-        // Atualizar botões
-        document.querySelectorAll('.operator-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        // Ativar o botão correspondente
-        document.querySelector(`.operator-btn[onclick="showOperator('${operatorId}')"]`).classList.add('active');
-    }
-
-    function showMessage(operator, text, isError = false) {
-        const messageEl = document.getElementById(`message-${operator.toLowerCase()}`);
-        const icon = isError ? '<i class="fas fa-exclamation-circle"></i>' : '<i class="fas fa-check-circle"></i>';
-        
-        messageEl.innerHTML = `${icon} <span>${text}</span>`;
-        messageEl.className = isError ? 'message error' : 'message success';
-        messageEl.style.display = 'flex';
-        
-        setTimeout(() => {
-            messageEl.style.display = 'none';
-        }, 3000);
-    }
-
-    function updateUI(alertsData) {
-        // Filtrar apenas alertas do modelo 313
-        const model313Alerts = alertsData.filter(alert => alert.model === '313');
-        
-        // Atualizar para cada operador
-        ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'].forEach(operator => {
-            const part = 
-                operator === 'A1' ? 'Eixos' :
-                operator === 'A2' ? 'Chassi' :
-                operator === 'A3' ? 'Lanternas' :
-                operator === 'A4' ? 'Assoalho' :
-                operator === 'A5' ? 'Rodas' : 'Teto';
-                       
-            const myAlert = model313Alerts.find(alert => alert.operator === operator && alert.part === part);
-            const statusEl = document.getElementById(`status-${operator.toLowerCase()}`);
-            const requestBtn = document.querySelector(`#${operator.toLowerCase()} .requestBtn`);
-            const stopBtn = document.querySelector(`#${operator.toLowerCase()} .stopBtn`);
+        function showOperator(operatorId) {
+            document.querySelectorAll('[id^="a"]').forEach(page => {
+                page.style.display = 'none';
+            });
             
-            if (myAlert) {
-                const startedAt = new Date(myAlert.started_at);
-                statusEl.innerHTML = `<i class="fas fa-exclamation-triangle"></i> <span>Solicitação ativa</span>`;
-                statusEl.innerHTML += `<div class="timestamp">Desde ${startedAt.toLocaleTimeString()}</div>`;
-                statusEl.className = 'status active-status';
-                requestBtn.disabled = true;
-                stopBtn.disabled = false;
-                activeAlerts[operator] = myAlert.id;
-            } else {
-                statusEl.innerHTML = `<i class="fas fa-check-circle"></i> <span>Solicitação inativa</span>`;
-                statusEl.className = 'status inactive';
-                requestBtn.disabled = false;
-                stopBtn.disabled = true;
-                activeAlerts[operator] = null;
-            }
-        });
-    }
-
-    async function fetchAlerts() {
-        try {
-            const response = await fetch('https://banco.pythonanywhere.com/alerts?model=313');
-            if (!response.ok) throw new Error('Falha ao buscar alertas');
-            
-            const alerts = await response.json();
-            updateUI(alerts);
-        } catch (error) {
-            console.error('Erro ao buscar alertas:', error);
+            document.getElementById(operatorId).style.display = 'block';
         }
-    }
 
-    async function requestPart(operator, part) {
-        const requestBtn = document.querySelector(`#${operator.toLowerCase()} .requestBtn`);
-        const originalText = requestBtn.innerHTML;
-        
-        try {
-            // Feedback visual de carregamento
-            requestBtn.innerHTML = '<span class="loading"></span> Solicitando...';
-            requestBtn.disabled = true;
+        function startProcess(operator, part) {
+            const data = {
+                model: MODEL,
+                operator: operator,
+                part: part
+            };
             
-            const response = await fetch('https://banco.pythonanywhere.com/alerts', {
+            fetch(`${API_BASE}/process/start`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    model: '313', 
-                    operator, 
-                    part 
-                })
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    showMessage(operator, result.error, 'error');
+                } else {
+                    const statusElement = document.getElementById(`process-status-${operator.toLowerCase()}`);
+                    statusElement.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo em andamento</span>';
+                    
+                    document.getElementById(`start-process-${operator.toLowerCase()}`).disabled = true;
+                    document.getElementById(`end-process-${operator.toLowerCase()}`).disabled = false;
+                    
+                    startTimer(operator);
+                    showMessage(operator, 'Processo iniciado com sucesso!', 'success');
+                }
+            })
+            .catch(error => {
+                showMessage(operator, 'Erro ao iniciar processo: ' + error, 'error');
             });
-            
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Falha ao solicitar peça');
-            }
-            
-            const result = await response.json();
-            showMessage(operator, 'Solicitação enviada com sucesso!');
-            fetchAlerts(); // Atualiza imediatamente
-        } catch (error) {
-            showMessage(operator, error.message, true);
-        } finally {
-            requestBtn.innerHTML = originalText;
         }
-    }
 
-    async function stopRequest(operator, part) {
-        const stopBtn = document.querySelector(`#${operator.toLowerCase()} .stopBtn`);
-        const originalText = stopBtn.innerHTML;
-        
-        try {
-            // Feedback visual de carregamento
-            stopBtn.innerHTML = '<span class="loading"></span> Parando...';
-            stopBtn.disabled = true;
+        function endProcess(operator, part) {
+            const data = {
+                model: MODEL,
+                operator: operator,
+                part: part
+            };
             
-            const response = await fetch('https://banco.pythonanywhere.com/alerts/stop', {
+            fetch(`${API_BASE}/process/end`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ 
-                    model: '313', 
-                    operator, 
-                    part 
-                })
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    showMessage(operator, result.error, 'error');
+                } else {
+                    const statusElement = document.getElementById(`process-status-${operator.toLowerCase()}`);
+                    statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Processo finalizado</span>';
+                    
+                    stopTimer(operator);
+                    document.getElementById(`end-process-${operator.toLowerCase()}`).disabled = true;
+                    
+                    showMessage(operator, `Processo finalizado! Duração: ${result.duration.toFixed(2)} segundos`, 'success');
+                    
+                    if (result.next_operator) {
+                        const nextOperator = result.next_operator.toLowerCase();
+                        document.getElementById(`start-process-${nextOperator}`).disabled = false;
+                        const nextStatus = document.getElementById(`process-status-${nextOperator}`);
+                        nextStatus.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo iniciado automaticamente</span>';
+                        startTimer(result.next_operator);
+                    }
+                }
+            })
+            .catch(error => {
+                showMessage(operator, 'Erro ao finalizar processo: ' + error, 'error');
             });
-            
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Falha ao parar solicitação');
-            }
-            
-            showMessage(operator, 'Solicitação parada com sucesso!');
-            fetchAlerts(); // Atualiza imediatamente
-        } catch (error) {
-            showMessage(operator, error.message, true);
-        } finally {
-            stopBtn.innerHTML = originalText;
         }
-    }
 
-    // Iniciar polling
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchAlerts(); // Primeira carga
-        pollInterval = setInterval(fetchAlerts, 1000); // Polling a cada 1s
-    });
+        function requestPart(operator, part) {
+            const data = {
+                model: MODEL,
+                operator: operator,
+                part: part
+            };
+            
+            fetch(`${API_BASE}/alerts`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    showMessage(operator, result.error, 'error');
+                } else {
+                    const requestBtn = document.querySelector(`button[onclick="requestPart('${operator}', '${part}')"]`);
+                    const stopBtn = document.querySelector(`button[onclick="stopRequest('${operator}', '${part}')"]`);
+                    requestBtn.disabled = true;
+                    stopBtn.disabled = false;
+                    showMessage(operator, 'Solicitação enviada com sucesso!', 'success');
+                }
+            })
+            .catch(error => {
+                showMessage(operator, 'Erro ao enviar solicitação: ' + error, 'error');
+            });
+        }
 
-    // Limpar intervalo quando a página for fechada
-    window.addEventListener('beforeunload', function() {
-        clearInterval(pollInterval);
-    });
-</script>
+        function stopRequest(operator, part) {
+            const data = {
+                model: MODEL,
+                operator: operator,
+                part: part
+            };
+            
+            fetch(`${API_BASE}/alerts/stop`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    showMessage(operator, result.error, 'error');
+                } else {
+                    const requestBtn = document.querySelector(`button[onclick="requestPart('${operator}', '${part}')"]`);
+                    const stopBtn = document.querySelector(`button[onclick="stopRequest('${operator}', '${part}')"]`);
+                    requestBtn.disabled = false;
+                    stopBtn.disabled = true;
+                    showMessage(operator, 'Solicitação parada com sucesso!', 'success');
+                }
+            })
+            .catch(error => {
+                showMessage(operator, 'Erro ao parar solicitação: ' + error, 'error');
+            });
+        }
+
+        function showMessage(operator, text, type) {
+            const messageElement = document.getElementById(`message-${operator.toLowerCase()}`);
+            messageElement.textContent = text;
+            messageElement.style.display = 'block';
+            messageElement.style.color = type === 'error' ? 'red' : 'green';
+            
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 5000);
+        }
+
+        function startTimer(operator) {
+            const timerElement = document.getElementById(`timer-${operator.toLowerCase()}`);
+            timerElement.style.display = 'block';
+            
+            startTimes[operator] = new Date();
+            
+            timers[operator] = setInterval(() => {
+                const now = new Date();
+                const elapsed = Math.floor((now - startTimes[operator]) / 1000);
+                
+                const hours = Math.floor(elapsed / 3600);
+                const minutes = Math.floor((elapsed % 3600) / 60);
+                const seconds = elapsed % 60;
+                
+                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function stopTimer(operator) {
+            if (timers[operator]) {
+                clearInterval(timers[operator]);
+                timers[operator] = null;
+            }
+        }
+
+        function checkProcessStatus() {
+            fetch(`${API_BASE}/process/status?model=${MODEL}`)
+            .then(response => response.json())
+            .then(processes => {
+                processes.forEach(process => {
+                    const operator = process.operator.toLowerCase();
+                    
+                    if (process.is_active) {
+                        document.getElementById(`process-status-${operator}`).innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo em andamento</span>';
+                        document.getElementById(`start-process-${operator}`).disabled = true;
+                        document.getElementById(`end-process-${operator}`).disabled = false;
+                        
+                        if (!timers[process.operator]) {
+                            startTimer(process.operator);
+                        }
+                    } else {
+                        document.getElementById(`process-status-${operator}`).innerHTML = '<i class="fas fa-check-circle"></i><span>Processo não iniciado</span>';
+                        document.getElementById(`end-process-${operator}`).disabled = true;
+                        
+                        if (process.operator === 'A1') {
+                            document.getElementById(`start-process-${operator}`).disabled = false;
+                        } else {
+                            const prevOperator = getPreviousOperator(process.operator);
+                            const prevProcess = processes.find(p => p.operator === prevOperator);
+                            if (prevProcess && prevProcess.is_active) {
+                                document.getElementById(`start-process-${operator}`).disabled = false;
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao verificar status dos processos:', error);
+            });
+        }
+
+        function getPreviousOperator(operator) {
+            const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
+            const index = operators.indexOf(operator);
+            return index > 0 ? operators[index - 1] : null;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkProcessStatus();
+            setInterval(checkProcessStatus, 5000);
+        });
+    </script>
 </body>
 </html>

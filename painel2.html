@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle - MDC System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-light: #34495e;
+            --secondary: #e74c3c;
+            --secondary-light: #ff7f6a;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --info: #3498db;
+            --purple: #9b59b6;
+            --pink: #e84393;
+            --light-bg: #ecf0f1;
+            --dark-text: #2c3e50;
+            --light-text: #ffffff;
+            --gray: #95a5a6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .dashboard-header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .dashboard-header h2 {
+            color: var(--primary-light);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-header h3 {
+            color: var(--gray);
+            font-size: 1.2rem;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .model-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .model-btn {
+            padding: 15px 30px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .model-btn:hover {
+            background-color: var(--primary-light);
+        }
+
+        .model-btn.active {
+            background-color: var(--secondary);
+        }
+
+        .panel-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .panel-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .panel-content {
+            padding: 25px;
+        }
+
+        .process-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .process-table th,
+        .process-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .process-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .process-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .bottleneck {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .bottleneck::after {
+            content: " (Gargalo)";
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .summary-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .refresh-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--info);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid var(--gray);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .model-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .model-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .panel {
+                max-width: 100%;
+            }
+            
+            .process-table {
+                font-size: 0.9rem;
+            }
+            
+            .process-table th,
+            .process-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <h1>Painel de Controle - MDC System</h1>
+        <h2>Monitoramento de Tempos e Gargalos</h2>
+        <h3>Disciplina de Processo de Produção - Professor Ronaldo Kiihl</h3>
+    </div>
+
+    <div class="model-selector">
+        <button class="model-btn active" onclick="showModel('313')">
+            <i class="fas fa-car"></i> Modelo 313
+        </button>
+        <button class="model-btn" onclick="showModel('314')">
+            <i class="fas fa-car"></i> Modelo 314
+        </button>
+    </div>
+
+    <div class="panel-container">
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Modelo <span id="model-name">313</span> - Tempos dos Processos</h2>
+            </div>
+            <div class="panel-content">
+                <table class="process-table">
+                    <thead>
+                        <tr>
+                            <th>Operador</th>
+                            <th>Peça</th>
+                            <th>Tempo (segundos)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-times-body">
+                        <tr>
+                            <td colspan="3" class="no-data">Nenhum dado disponível. Clique em Atualizar.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="summary" id="summary-container" style="display: none;">
+                    <div class="summary-item">
+                        <span class="summary-label">Tempo Total da Linha:</span>
+                        <span class="summary-value" id="total-time">0s</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Gargalo:</span>
+                        <span class="summary-value" id="bottleneck">Nenhum</span>
+                    </div>
+                </div>
+
+                <button class="refresh-btn" onclick="loadProcessTimes()">
+                    <i class="fas fa-sync-alt"></i> Atualizar Dados
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>MDC System - Desenvolvido para a Disciplina de Processo de Produção</p>
+        <p>© 2023 - Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://banco.pythonanywhere.com';
+        let currentModel = '313';
+
+        function showModel(model) {
+            currentModel = model;
+            document.getElementById('model-name').textContent = model;
+            document.querySelectorAll('button').forEach(btn => {
+                btn.style.backgroundColor = '';
+            });
+            document.querySelector(`button[onclick="showModel('${model}')"]`).style.backgroundColor = '#e74c3c';
+            loadProcessTimes();
+        }
+
+        function loadProcessTimes() {
+            const refreshBtn = document.querySelector('button[onclick="loadProcessTimes()"]');
+            const originalText = refreshBtn.innerHTML;
+            refreshBtn.innerHTML = '<div class="loading"></div> Carregando...';
+            
+            fetch(`${API_BASE}/process/times?model=${currentModel}`)
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById('process-times-body');
+                const summaryContainer = document.getElementById('summary-container');
+                
+                tableBody.innerHTML = '';
+                
+                if (data.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="3">Nenhum dado disponível para este modelo.</td></tr>';
+                    summaryContainer.style.display = 'none';
+                    refreshBtn.innerHTML = originalText;
+                    return;
+                }
+                
+                let totalTime = 0;
+                let maxTime = 0;
+                let bottleneck = null;
+                
+                data.sort((a, b) => a.operator.localeCompare(b.operator));
+                
+                data.forEach(process => {
+                    const row = document.createElement('tr');
+                    
+                    const duration = process.duration || 0;
+                    if (duration > maxTime) {
+                        maxTime = duration;
+                        bottleneck = process.operator;
+                    }
+                    
+                    totalTime += duration;
+                    
+                    if (process.operator === bottleneck) {
+                        row.style.backgroundColor = '#ffece8';
+                        row.style.fontWeight = 'bold';
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${process.operator}</td>
+                        <td>${process.part}</td>
+                        <td>${duration.toFixed(2)}s</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+                document.getElementById('total-time').textContent = `${totalTime.toFixed(2)}s`;
+                document.getElementById('bottleneck').textContent = bottleneck ? `${bottleneck} (${maxTime.toFixed(2)}s)` : 'Nenhum';
+                
+                summaryContainer.style.display = 'block';
+                refreshBtn.innerHTML = originalText;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar dados:', error);
+                document.getElementById('process-times-body').innerHTML = `
+                    <tr>
+                        <td colspan="3">
+                            Erro ao carregar dados. Verifique se o servidor está rodando.
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('summary-container').style.display = 'none';
+                refreshBtn.innerHTML = originalText;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProcessTimes();
+            setInterval(loadProcessTimes, 10000);
+        });
+    </script>
+</body>
+</html>

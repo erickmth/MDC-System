@@ -6,9 +6,6 @@
     <title>MDC System - Painel de Logística</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/png" href="favicon.png">
-    <script src="on.js"></script>
-
-
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -81,6 +78,32 @@
             font-weight: 300;
             font-style: italic;
             opacity: 0.8;
+        }
+
+        .model-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .model-btn {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .model-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .model-btn.active {
+            background-color: var(--accent-color);
         }
 
         .card {
@@ -374,6 +397,12 @@
     </header>
 
     <div class="container">
+        <div class="model-filter">
+            <button class="model-btn active" onclick="filterAlerts('all')">Todos os Modelos</button>
+            <button class="model-btn" onclick="filterAlerts('313')">Modelo 313</button>
+            <button class="model-btn" onclick="filterAlerts('314')">Modelo 314</button>
+        </div>
+
         <div class="card">
             <div class="card-title">
                 <i class="fas fa-clipboard-list"></i>
@@ -391,6 +420,7 @@
                         <thead>
                             <tr>
                                 <th><i class="fas fa-hashtag"></i> ID</th>
+                                <th><i class="fas fa-car"></i> Modelo</th>
                                 <th><i class="fas fa-user"></i> Operador</th>
                                 <th><i class="fas fa-cog"></i> Peça</th>
                                 <th><i class="fas fa-clock"></i> Início</th>
@@ -416,131 +446,143 @@
         <p><i class="fas fa-copyright"></i> Sistema de Solicitação de Peças • Desenvolvido por Erick Matheus • FORMARE 2025</p>
     </footer>
 
-    <script>
-        let pollInterval;
-        let alertsData = [];
+<script>
+    let pollInterval;
+    let alertsData = [];
+    let currentFilter = 'all';
 
-        function showMessage(text, isError = false) {
-            const messageEl = document.getElementById('message');
-            messageEl.innerHTML = isError 
-                ? `<i class="fas fa-exclamation-circle"></i> ${text}`
-                : `<i class="fas fa-check-circle"></i> ${text}`;
-            messageEl.className = isError ? 'message error' : 'message success';
-            messageEl.style.display = 'flex';
-            
-            setTimeout(() => {
-                messageEl.style.display = 'none';
-            }, 4000);
-        }
+    function showMessage(text, isError = false) {
+        const messageEl = document.getElementById('message');
+        messageEl.innerHTML = isError 
+            ? `<i class="fas fa-exclamation-circle"></i> ${text}`
+            : `<i class="fas fa-check-circle"></i> ${text}`;
+        messageEl.className = isError ? 'message error' : 'message success';
+        messageEl.style.display = 'flex';
+        
+        setTimeout(() => {
+            messageEl.style.display = 'none';
+        }, 4000);
+    }
 
-        function formatDateTime(isoString) {
-            const date = new Date(isoString);
-            return new Intl.DateTimeFormat('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            }).format(date);
-        }
+    function formatDateTime(isoString) {
+        const date = new Date(isoString);
+        return new Intl.DateTimeFormat('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }).format(date);
+    }
 
-        async function deleteAlert(id) {
-            if (!confirm('Tem certeza que deseja remover este alerta?')) return;
-            
-            try {
-                const response = await fetch(`https://banco.pythonanywhere.com/alerts/${id}`, {
-                    method: 'DELETE'
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Falha ao deletar alerta');
-                }
-                
-                showMessage('Alerta removido com sucesso!');
-                // Remove o alerta localmente para atualização imediata
-                alertsData = alertsData.filter(alert => alert.id !== id);
-                updateUI(alertsData);
-            } catch (error) {
-                showMessage(error.message, true);
-            }
-        }
-
-        function updateUI(alerts) {
-            const summaryEl = document.getElementById('summary');
-            const tableEl = document.getElementById('alerts-table');
-            const emptyEl = document.getElementById('empty-alerts');
-            const tbodyEl = document.getElementById('alerts-body');
-            
-            // Atualizar resumo
-            if (alerts.length > 0) {
-                summaryEl.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--warning-color')}"></i> Alertas ativos: <span class="alert-count">${alerts.length}</span>`;
-            } else {
-                summaryEl.innerHTML = `<i class="fas fa-check-circle" style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--success-color')}"></i> Nenhum alerta ativo`;
-            }
-            
-            // Mostrar tabela ou mensagem de vazio
-            if (alerts.length > 0) {
-                tableEl.style.display = 'table';
-                emptyEl.style.display = 'none';
-                
-                // Limpar e preencher tabela
-                tbodyEl.innerHTML = '';
-                alerts.forEach(alert => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td style="text-align: center;">${alert.id}</td>
-                        <td>${alert.operator}</td>
-                        <td>${alert.part}</td>
-                        <td>${formatDateTime(alert.started_at)}</td>
-                        <td style="text-align: center;">
-                            <button class="delete-btn" onclick="deleteAlert(${alert.id})">
-                                <i class="fas fa-trash"></i>
-                                <span>Remover</span>
-                            </button>
-                        </td>
-                    `;
-                    tbodyEl.appendChild(row);
-                });
-            } else {
-                tableEl.style.display = 'none';
-                emptyEl.style.display = 'flex';
-            }
-        }
-
-        async function fetchAlerts() {
-            try {
-                const response = await fetch('https://banco.pythonanywhere.com/alerts');
-                if (!response.ok) throw new Error('Falha ao buscar alertas');
-                
-                const alerts = await response.json();
-                alertsData = alerts;
-                updateUI(alerts);
-            } catch (error) {
-                console.error('Erro ao buscar alertas:', error);
-                showMessage('Erro ao carregar alertas. Verifique sua conexão.', true);
-                
-                // Mostrar dados de exemplo em caso de erro
-                if (alertsData.length === 0) {
-                    const exampleAlerts = [
-                        {id: 1, operator: "João Silva", part: "Engrenagem AX-45", started_at: new Date().toISOString()},
-                        {id: 2, operator: "Maria Santos", part: "Parafuso PT-89", started_at: new Date().toISOString()}
-                    ];
-                    updateUI(exampleAlerts);
-                }
-            }
-        }
-
-        // Iniciar polling
-        document.addEventListener('DOMContentLoaded', function() {
-            fetchAlerts(); // Primeira carga
-            pollInterval = setInterval(fetchAlerts, 3000); // Polling a cada 3s
+    function filterAlerts(filter) {
+        currentFilter = filter;
+        
+        // Atualizar botões
+        document.querySelectorAll('.model-btn').forEach(btn => {
+            btn.classList.remove('active');
         });
+        document.querySelector(`.model-btn[onclick="filterAlerts('${filter}')"]`).classList.add('active');
+        
+        // Atualizar UI com filtro aplicado
+        updateUI(alertsData);
+    }
 
-        // Limpar intervalo quando a página for fechada
-        window.addEventListener('beforeunload', function() {
-            clearInterval(pollInterval);
-        });
-    </script>
+    async function deleteAlert(id) {
+        if (!confirm('Tem certeza que deseja remover este alerta?')) return;
+        
+        try {
+            const response = await fetch(`https://banco.pythonanywhere.com/alerts/${id}`, {
+                method: 'DELETE'
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Falha ao deletar alerta');
+            }
+            
+            showMessage('Alerta removido com sucesso!');
+            // Remove o alerta localmente para atualização imediata
+            alertsData = alertsData.filter(alert => alert.id !== id);
+            updateUI(alertsData);
+        } catch (error) {
+            showMessage(error.message, true);
+        }
+    }
+
+    function updateUI(alerts) {
+        // Aplicar filtro
+        let filteredAlerts = alerts;
+        if (currentFilter !== 'all') {
+            filteredAlerts = alerts.filter(alert => alert.model === currentFilter);
+        }
+        
+        const summaryEl = document.getElementById('summary');
+        const tableEl = document.getElementById('alerts-table');
+        const emptyEl = document.getElementById('empty-alerts');
+        const tbodyEl = document.getElementById('alerts-body');
+        
+        // Atualizar resumo
+        if (filteredAlerts.length > 0) {
+            summaryEl.innerHTML = `<i class="fas fa-exclamation-triangle" style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--warning-color')}"></i> Alertas ativos: <span class="alert-count">${filteredAlerts.length}</span>`;
+        } else {
+            summaryEl.innerHTML = `<i class="fas fa-check-circle" style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--success-color')}"></i> Nenhum alerta ativo`;
+        }
+        
+        // Mostrar tabela ou mensagem de vazio
+        if (filteredAlerts.length > 0) {
+            tableEl.style.display = 'table';
+            emptyEl.style.display = 'none';
+            
+            // Limpar e preencher tabela
+            tbodyEl.innerHTML = '';
+            filteredAlerts.forEach(alert => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="text-align: center;">${alert.id}</td>
+                    <td style="text-align: center;">${alert.model}</td>
+                    <td>${alert.operator}</td>
+                    <td>${alert.part}</td>
+                    <td>${formatDateTime(alert.started_at)}</td>
+                    <td style="text-align: center;">
+                        <button class="delete-btn" onclick="deleteAlert(${alert.id})">
+                            <i class="fas fa-trash"></i>
+                            <span>Remover</span>
+                        </button>
+                    </td>
+                `;
+                tbodyEl.appendChild(row);
+            });
+        } else {
+            tableEl.style.display = 'none';
+            emptyEl.style.display = 'flex';
+        }
+    }
+
+    async function fetchAlerts() {
+        try {
+            const response = await fetch('https://banco.pythonanywhere.com/alerts');
+            if (!response.ok) throw new Error('Falha ao buscar alertas');
+            
+            const alerts = await response.json();
+            alertsData = alerts;
+            updateUI(alerts);
+        } catch (error) {
+            console.error('Erro ao buscar alertas:', error);
+            showMessage('Erro ao carregar alertas. Verifique sua conexão.', true);
+        }
+    }
+
+    // Iniciar polling
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchAlerts(); // Primeira carga
+        pollInterval = setInterval(fetchAlerts, 3000); // Polling a cada 3s
+    });
+
+    // Limpar intervalo quando a página for fechada
+    window.addEventListener('beforeunload', function() {
+        clearInterval(pollInterval);
+    });
+</script>
 </body>
 </html>

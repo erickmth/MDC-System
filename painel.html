@@ -489,8 +489,6 @@
     }
 
     async function deleteAlert(id) {
-        if (!confirm('Tem certeza que deseja remover este alerta?')) return;
-        
         try {
             const response = await fetch(`https://banco.pythonanywhere.com/alerts/${id}`, {
                 method: 'DELETE'

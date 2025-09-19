@@ -511,10 +511,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A1', 'Eixos')">
+                    <button id="request-btn-a1" class="requestBtn" onclick="requestPart('A1', 'Eixos')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A1', 'Eixos')" disabled>
+                    <button id="stop-btn-a1" class="stopBtn" onclick="stopRequest('A1', 'Eixos')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -554,10 +554,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A2', 'Chassi')">
+                    <button id="request-btn-a2" class="requestBtn" onclick="requestPart('A2', 'Chassi')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A2', 'Chassi')" disabled>
+                    <button id="stop-btn-a2" class="stopBtn" onclick="stopRequest('A2', 'Chassi')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -597,10 +597,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A3', 'Lanternas')">
+                    <button id="request-btn-a3" class="requestBtn" onclick="requestPart('A3', 'Lanternas')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A3', 'Lanternas')" disabled>
+                    <button id="stop-btn-a3" class="stopBtn" onclick="stopRequest('A3', 'Lanternas')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -640,10 +640,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A4', 'Assoalho')">
+                    <button id="request-btn-a4" class="requestBtn" onclick="requestPart('A4', 'Assoalho')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A4', 'Assoalho')" disabled>
+                    <button id="stop-btn-a4" class="stopBtn" onclick="stopRequest('A4', 'Assoalho')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -683,10 +683,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A5', 'Rodas')">
+                    <button id="request-btn-a5" class="requestBtn" onclick="requestPart('A5', 'Rodas')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A5', 'Rodas')" disabled>
+                    <button id="stop-btn-a5" class="stopBtn" onclick="stopRequest('A5', 'Rodas')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -726,10 +726,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button class="requestBtn" onclick="requestPart('A6', 'Teto')">
+                    <button id="request-btn-a6" class="requestBtn" onclick="requestPart('A6', 'Teto')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button class="stopBtn" onclick="stopRequest('A6', 'Teto')" disabled>
+                    <button id="stop-btn-a6" class="stopBtn" onclick="stopRequest('A6', 'Teto')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -749,13 +749,18 @@
         const MODEL = '313';
         let timers = {};
         let startTimes = {};
+        let requestCheckInterval;
 
         function showOperator(operatorId) {
-            document.querySelectorAll('[id^="a"]').forEach(page => {
-                page.style.display = 'none';
+            document.querySelectorAll('.operator-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            document.querySelector(`.operator-btn[onclick="showOperator('${operatorId}')"]`).classList.add('active');
             
-            document.getElementById(operatorId).style.display = 'block';
+            document.querySelectorAll('.operator-page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(operatorId).classList.add('active');
         }
 
         function startProcess(operator, part) {
@@ -852,10 +857,7 @@
                 if (result.error) {
                     showMessage(operator, result.error, 'error');
                 } else {
-                    const requestBtn = document.querySelector(`button[onclick="requestPart('${operator}', '${part}')"]`);
-                    const stopBtn = document.querySelector(`button[onclick="stopRequest('${operator}', '${part}')"]`);
-                    requestBtn.disabled = true;
-                    stopBtn.disabled = false;
+                    updateRequestButtons(operator, true);
                     showMessage(operator, 'Solicitação enviada com sucesso!', 'success');
                 }
             })
@@ -883,10 +885,7 @@
                 if (result.error) {
                     showMessage(operator, result.error, 'error');
                 } else {
-                    const requestBtn = document.querySelector(`button[onclick="requestPart('${operator}', '${part}')"]`);
-                    const stopBtn = document.querySelector(`button[onclick="stopRequest('${operator}', '${part}')"]`);
-                    requestBtn.disabled = false;
-                    stopBtn.disabled = true;
+                    updateRequestButtons(operator, false);
                     showMessage(operator, 'Solicitação parada com sucesso!', 'success');
                 }
             })
@@ -895,11 +894,19 @@
             });
         }
 
+        function updateRequestButtons(operator, isRequesting) {
+            const requestBtn = document.getElementById(`request-btn-${operator.toLowerCase()}`);
+            const stopBtn = document.getElementById(`stop-btn-${operator.toLowerCase()}`);
+            
+            requestBtn.disabled = isRequesting;
+            stopBtn.disabled = !isRequesting;
+        }
+
         function showMessage(operator, text, type) {
             const messageElement = document.getElementById(`message-${operator.toLowerCase()}`);
             messageElement.textContent = text;
-            messageElement.style.display = 'block';
-            messageElement.style.color = type === 'error' ? 'red' : 'green';
+            messageElement.className = `message ${type === 'error' ? 'error' : 'success'}`;
+            messageElement.style.display = 'flex';
             
             setTimeout(() => {
                 messageElement.style.display = 'none';
@@ -967,15 +974,41 @@
             });
         }
 
+        function checkRequestStatus() {
+            fetch(`${API_BASE}/alerts?model=${MODEL}`)
+            .then(response => response.json())
+            .then(alerts => {
+                // Para cada operador, verificar se existe um alerta ativo
+                const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
+                
+                operators.forEach(operator => {
+                    const hasActiveAlert = alerts.some(alert => 
+                        alert.model === MODEL && 
+                        alert.operator === operator
+                    );
+                    
+                    updateRequestButtons(operator, hasActiveAlert);
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao verificar status das solicitações:', error);
+            });
+        }
+
         function getPreviousOperator(operator) {
             const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
             const index = operators.indexOf(operator);
             return index > 0 ? operators[index - 1] : null;
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function checkAllStatuses() {
             checkProcessStatus();
-            setInterval(checkProcessStatus, 5000);
+            checkRequestStatus();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAllStatuses();
+            setInterval(checkAllStatuses, 3000); // Verificar a cada 3 segundos
         });
     </script>
 </body>

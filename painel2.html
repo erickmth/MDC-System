@@ -220,6 +220,29 @@
             background-color: #2980b9;
         }
 
+        .reset-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--warning);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .reset-btn:hover {
+            background-color: #e67e22;
+        }
+
         .loading {
             display: inline-block;
             width: 20px;
@@ -235,6 +258,209 @@
             padding: 30px;
             color: var(--gray);
             font-style: italic;
+        }
+
+        .carrinhos-container {
+            margin-top: 30px;
+        }
+
+        .carrinho-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--info);
+        }
+
+        .carrinho-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .carrinho-id {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .carrinho-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-em-producao {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--info);
+        }
+
+        .status-finalizado {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success);
+        }
+
+        .carrinho-etapas {
+            margin-top: 15px;
+        }
+
+        .carrinho-etapas h4 {
+            margin: 15px 0 10px 0;
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .carrinho-etapas table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .carrinho-etapas th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--primary);
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .carrinho-etapas td {
+            padding: 8px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .carrinho-etapas tr.bottleneck {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .etapa {
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .etapa.ativa {
+            background-color: rgba(52, 152, 219, 0.2);
+            border: 2px solid var(--info);
+        }
+
+        .etapa.concluida {
+            background-color: rgba(39, 174, 96, 0.2);
+            border: 2px solid var(--success);
+        }
+
+        .etapa-tempo {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        /* Estilos do Modal de Confirmação */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .modal-content h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .modal-btn.confirm {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background-color: #c0392b;
+        }
+
+        .modal-btn.cancel {
+            background-color: var(--gray);
+            color: white;
+        }
+
+        .modal-btn.cancel:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Melhorias de UX */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            box-shadow: var(--shadow);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: var(--success);
+        }
+
+        .notification.error {
+            background-color: var(--secondary);
+        }
+
+        .notification.info {
+            background-color: var(--info);
         }
 
         footer {
@@ -273,6 +499,22 @@
             .process-table td {
                 padding: 8px 10px;
             }
+            
+            .carrinho-etapas {
+                overflow-x: auto;
+            }
+            
+            .carrinho-etapas table {
+                font-size: 0.8rem;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -303,7 +545,7 @@
                         <tr>
                             <th>Operador</th>
                             <th>Peça</th>
-                            <th>Tempo (segundos)</th>
+                            <th>Tempo Médio (segundos)</th>
                         </tr>
                     </thead>
                     <tbody id="process-times-body">
@@ -315,21 +557,59 @@
 
                 <div class="summary" id="summary-container" style="display: none;">
                     <div class="summary-item">
-                        <span class="summary-label">Tempo Total da Linha:</span>
-                        <span class="summary-value" id="total-time">0s</span>
+                        <span class="summary-label">Tempo Médio da Linha:</span>
+                        <span class="summary-value" id="avg-time">0s</span>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">Gargalo:</span>
+                        <span class="summary-label">Gargalo Principal:</span>
                         <span class="summary-value" id="bottleneck">Nenhum</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Carrinhos em Produção:</span>
+                        <span class="summary-value" id="active-carrinhos">0</span>
                     </div>
                 </div>
 
                 <button class="refresh-btn" onclick="loadProcessTimes()">
                     <i class="fas fa-sync-alt"></i> Atualizar Dados
                 </button>
+                
+                <button class="reset-btn" onclick="showResetModal()">
+                    <i class="fas fa-trash-alt"></i> Resetar Dados de Produção
+                </button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Carrinhos em Produção</h2>
+            </div>
+            <div class="panel-content">
+                <div class="carrinhos-container" id="carrinhos-container">
+                    <div class="no-data">Carregando carrinhos...</div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal de Confirmação para Resetar Dados -->
+    <div class="modal-overlay" id="resetModal">
+        <div class="modal-content">
+            <h3>Confirmar Reset de Dados</h3>
+            <p>Tem certeza que deseja resetar todos os dados de produção? Esta ação irá apagar todo o histórico de produção e não pode ser desfeita.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="resetProductionData()">
+                    <i class="fas fa-trash-alt"></i> Sim, Resetar Dados
+                </button>
+                <button class="modal-btn cancel" onclick="hideResetModal()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificação -->
+    <div class="notification" id="notification"></div>
 
     <footer>
         <p>MDC System - Desenvolvido para a Disciplina de Processo de Produção</p>
@@ -343,11 +623,15 @@
         function showModel(model) {
             currentModel = model;
             document.getElementById('model-name').textContent = model;
-            document.querySelectorAll('button').forEach(btn => {
-                btn.style.backgroundColor = '';
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('.model-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
-            document.querySelector(`button[onclick="showModel('${model}')"]`).style.backgroundColor = '#e74c3c';
+            document.querySelector(`.model-btn[onclick="showModel('${model}')"]`).classList.add('active');
+            
             loadProcessTimes();
+            loadCarrinhos();
         }
 
         function loadProcessTimes() {
@@ -370,38 +654,59 @@
                     return;
                 }
                 
+                // Calcular médias por operador
+                const operatorTimes = {};
+                const operatorCount = {};
+                
+                data.forEach(process => {
+                    if (process.estado !== 'finalizado') return;
+                    
+                    const operator = process.operator;
+                    if (!operatorTimes[operator]) {
+                        operatorTimes[operator] = 0;
+                        operatorCount[operator] = 0;
+                    }
+                    operatorTimes[operator] += process.duration;
+                    operatorCount[operator]++;
+                });
+                
+                // Calcular totais
                 let totalTime = 0;
+                let totalProcesses = 0;
                 let maxTime = 0;
                 let bottleneck = null;
                 
-                data.sort((a, b) => a.operator.localeCompare(b.operator));
+                const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
                 
-                data.forEach(process => {
-                    const row = document.createElement('tr');
-                    
-                    const duration = process.duration || 0;
-                    if (duration > maxTime) {
-                        maxTime = duration;
-                        bottleneck = process.operator;
+                operators.forEach(operator => {
+                    if (operatorTimes[operator]) {
+                        const avgTime = operatorTimes[operator] / operatorCount[operator];
+                        totalTime += avgTime;
+                        totalProcesses++;
+                        
+                        if (avgTime > maxTime) {
+                            maxTime = avgTime;
+                            bottleneck = operator;
+                        }
+                        
+                        const row = document.createElement('tr');
+                        if (operator === bottleneck) {
+                            row.classList.add('bottleneck');
+                        }
+                        
+                        row.innerHTML = `
+                            <td>${operator}</td>
+                            <td>${getPartForOperator(operator, currentModel)}</td>
+                            <td>${avgTime.toFixed(2)}s</td>
+                        `;
+                        
+                        tableBody.appendChild(row);
                     }
-                    
-                    totalTime += duration;
-                    
-                    if (process.operator === bottleneck) {
-                        row.style.backgroundColor = '#ffece8';
-                        row.style.fontWeight = 'bold';
-                    }
-                    
-                    row.innerHTML = `
-                        <td>${process.operator}</td>
-                        <td>${process.part}</td>
-                        <td>${duration.toFixed(2)}s</td>
-                    `;
-                    
-                    tableBody.appendChild(row);
                 });
                 
-                document.getElementById('total-time').textContent = `${totalTime.toFixed(2)}s`;
+                // Atualizar resumo
+                const avgTotalTime = totalProcesses > 0 ? totalTime / totalProcesses : 0;
+                document.getElementById('avg-time').textContent = `${avgTotalTime.toFixed(2)}s`;
                 document.getElementById('bottleneck').textContent = bottleneck ? `${bottleneck} (${maxTime.toFixed(2)}s)` : 'Nenhum';
                 
                 summaryContainer.style.display = 'block';
@@ -421,9 +726,227 @@
             });
         }
 
+        function loadCarrinhos() {
+            // Primeiro carrega os carrinhos
+            fetch(`${API_BASE}/carrinhos?modelo=${currentModel}`)
+            .then(response => response.json())
+            .then(carrinhos => {
+                // Depois carrega os tempos dos processos para calcular gargalos
+                fetch(`${API_BASE}/process/times?model=${currentModel}`)
+                .then(response => response.json())
+                .then(processTimes => {
+                    const container = document.getElementById('carrinhos-container');
+                    const activeCarrinhos = carrinhos.filter(c => c.estado === 'em_producao').length;
+                    
+                    document.getElementById('active-carrinhos').textContent = activeCarrinhos;
+                    
+                    if (carrinhos.length === 0) {
+                        container.innerHTML = '<div class="no-data">Nenhum carrinho encontrado</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = '';
+                    
+                    // Calcular gargalos globais
+                    const bottleneckData = calculateBottlenecks(processTimes);
+                    
+                    carrinhos.forEach(carrinho => {
+                        const card = document.createElement('div');
+                        card.className = 'carrinho-card';
+                        
+                        const statusClass = carrinho.estado === 'finalizado' ? 'status-finalizado' : 'status-em-producao';
+                        const statusText = carrinho.estado === 'finalizado' ? 'FINALIZADO' : 'EM PRODUÇÃO';
+                        
+                        // Buscar etapas específicas deste carrinho
+                        const carrinhoEtapas = processTimes.filter(time => time.carrinho_id === carrinho.id);
+                        
+                        card.innerHTML = `
+                            <div class="carrinho-header">
+                                <div class="carrinho-id">Carrinho #${carrinho.id} (Seq: ${carrinho.sequencia})</div>
+                                <div class="carrinho-status ${statusClass}">${statusText}</div>
+                            </div>
+                            <div class="carrinho-info">
+                                <div><strong>Modelo:</strong> ${carrinho.modelo}</div>
+                                <div><strong>Operador Atual:</strong> ${carrinho.operador_atual || 'Nenhum'}</div>
+                                <div><strong>Tempo Total:</strong> ${carrinho.tempo_total ? carrinho.tempo_total.toFixed(2) + 's' : 'Calculando...'}</div>
+                            </div>
+                            ${carrinhoEtapas.length > 0 ? `
+                            <div class="carrinho-etapas">
+                                <h4>Tempos por Operação:</h4>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Operador</th>
+                                            <th>Peça</th>
+                                            <th>Tempo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${generateEtapasHTML(carrinhoEtapas, bottleneckData)}
+                                    </tbody>
+                                </table>
+                            </div>
+                            ` : '<div style="margin-top: 15px; color: var(--gray); font-style: italic;">Nenhuma etapa concluída ainda</div>'}
+                        `;
+                        
+                        container.appendChild(card);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar tempos:', error);
+                    document.getElementById('carrinhos-container').innerHTML = `
+                        <div class="no-data">Erro ao carregar detalhes dos carrinhos</div>
+                    `;
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar carrinhos:', error);
+                document.getElementById('carrinhos-container').innerHTML = `
+                    <div class="no-data">Erro ao carregar carrinhos</div>
+                `;
+            });
+        }
+
+        function calculateBottlenecks(processTimes) {
+            const operatorTimes = {};
+            const operatorCount = {};
+            
+            // Calcular médias por operador
+            processTimes.forEach(process => {
+                const operator = process.operator;
+                if (!operatorTimes[operator]) {
+                    operatorTimes[operator] = 0;
+                    operatorCount[operator] = 0;
+                }
+                operatorTimes[operator] += process.duration;
+                operatorCount[operator]++;
+            });
+            
+            // Encontrar gargalo (maior tempo médio)
+            let maxTime = 0;
+            let bottleneckOperator = null;
+            
+            Object.keys(operatorTimes).forEach(operator => {
+                if (operatorCount[operator] > 0) {
+                    const avgTime = operatorTimes[operator] / operatorCount[operator];
+                    if (avgTime > maxTime) {
+                        maxTime = avgTime;
+                        bottleneckOperator = operator;
+                    }
+                }
+            });
+            
+            return {
+                bottleneck: bottleneckOperator,
+                times: operatorTimes,
+                counts: operatorCount
+            };
+        }
+
+        function generateEtapasHTML(etapas, bottleneckData) {
+            // Ordenar etapas pela sequência dos operadores
+            const operatorOrder = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
+            etapas.sort((a, b) => operatorOrder.indexOf(a.operator) - operatorOrder.indexOf(b.operator));
+            
+            return etapas.map(etapa => {
+                const isBottleneck = etapa.operator === bottleneckData.bottleneck;
+                const rowClass = isBottleneck ? 'bottleneck' : '';
+                
+                return `
+                    <tr class="${rowClass}">
+                        <td>
+                            ${etapa.operator}
+                            ${isBottleneck ? ' <span style="color: var(--secondary); font-weight: bold;">(Gargalo)</span>' : ''}
+                        </td>
+                        <td>${etapa.part}</td>
+                        <td style="font-weight: ${isBottleneck ? 'bold' : 'normal'};">${etapa.duration.toFixed(2)}s</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function getPartForOperator(operator, model) {
+            if (model === '313') {
+                const parts = {
+                    'A1': 'Eixos',
+                    'A2': 'Chassi',
+                    'A3': 'Lanternas',
+                    'A4': 'Assoalho',
+                    'A5': 'Rodas',
+                    'A6': 'Teto'
+                };
+                return parts[operator] || 'Peça não definida';
+            } else {
+                const parts = {
+                    'A1': 'Eixos',
+                    'A2': 'Chassi',
+                    'A3': 'Lanternas',
+                    'A4': 'Motor',
+                    'A5': 'Rodas',
+                    'A6': 'Bancos'
+                };
+                return parts[operator] || 'Peça não definida';
+            }
+        }
+
+        // Funções para o modal de reset
+        function showResetModal() {
+            document.getElementById('resetModal').style.display = 'flex';
+        }
+
+        function hideResetModal() {
+            document.getElementById('resetModal').style.display = 'none';
+        }
+
+        function resetProductionData() {
+            hideResetModal();
+            
+            // Mostrar notificação de carregamento
+            showNotification('Resetando dados de produção...', 'info');
+            
+            // Chamar API para resetar dados
+            fetch(`${API_BASE}/reset`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    showNotification('Dados de produção resetados com sucesso!', 'success');
+                    // Recarregar os dados após o reset
+                    setTimeout(() => {
+                        loadProcessTimes();
+                        loadCarrinhos();
+                    }, 1500);
+                } else {
+                    throw new Error('Erro ao resetar dados');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao resetar dados:', error);
+                showNotification('Erro ao resetar dados. Tente novamente.', 'error');
+            });
+        }
+
+        // Função para exibir notificações
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             loadProcessTimes();
-            setInterval(loadProcessTimes, 10000);
+            loadCarrinhos();
+            setInterval(() => {
+                loadProcessTimes();
+                loadCarrinhos();
+            }, 10000); // Atualizar a cada 10 segundos
         });
     </script>
 </body>

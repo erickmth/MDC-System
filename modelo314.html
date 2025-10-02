@@ -173,13 +173,13 @@
         .a3 .header { background: var(--primary); }
         .a3 .header::after { background: var(--secondary); }
         
-        .a4 .header { background: var(--info); }
-        .a4 .header::after { background: var(--primary); }
+        .a4 .header { background: var(--warning); }
+        .a4 .header::after { background: var(--secondary); }
         
-        .a5 .header { background: var(--warning); }
-        .a5 .header::after { background: var(--secondary); }
+        .a5 .header { background: var(--success); }
+        .a5 .header::after { background: var(--primary); }
         
-        .a6 .header { background: var(--success); }
+        .a6 .header { background: var(--info); }
         .a6 .header::after { background: var(--primary); }
 
         .content {
@@ -392,6 +392,19 @@
             color: var(--gray);
         }
 
+        .carrinho-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--info);
+        }
+
+        .carrinho-id {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
         footer {
             margin-top: 40px;
             text-align: center;
@@ -490,6 +503,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a1" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a1"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a1" class="status inactive">
@@ -511,10 +528,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a1" class="requestBtn" onclick="requestPart('A1', 'Eixos')">
+                    <button id="request-btn-a1" class="requestBtn" onclick="requestPart('A1', 'Eixos')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a1" class="stopBtn" onclick="stopRequest('A1', 'Eixos')" disabled>
+                    <button id="stop-btn-a1" class="stopBtn" onclick="stopRequest('A1', 'Eixos')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -533,6 +550,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a2" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a2"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a2" class="status inactive">
@@ -554,10 +575,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a2" class="requestBtn" onclick="requestPart('A2', 'Chassi')">
+                    <button id="request-btn-a2" class="requestBtn" onclick="requestPart('A2', 'Chassi')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a2" class="stopBtn" onclick="stopRequest('A2', 'Chassi')" disabled>
+                    <button id="stop-btn-a2" class="stopBtn" onclick="stopRequest('A2', 'Chassi')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -576,6 +597,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a3" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a3"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a3" class="status inactive">
@@ -597,10 +622,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a3" class="requestBtn" onclick="requestPart('A3', 'Lanternas')">
+                    <button id="request-btn-a3" class="requestBtn" onclick="requestPart('A3', 'Lanternas')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a3" class="stopBtn" onclick="stopRequest('A3', 'Lanternas')" disabled>
+                    <button id="stop-btn-a3" class="stopBtn" onclick="stopRequest('A3', 'Lanternas')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -619,6 +644,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a4" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a4"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a4" class="status inactive">
@@ -640,10 +669,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a4" class="requestBtn" onclick="requestPart('A4', 'Motor')">
+                    <button id="request-btn-a4" class="requestBtn" onclick="requestPart('A4', 'Motor')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a4" class="stopBtn" onclick="stopRequest('A4', 'Motor')" disabled>
+                    <button id="stop-btn-a4" class="stopBtn" onclick="stopRequest('A4', 'Motor')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -662,6 +691,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a5" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a5"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a5" class="status inactive">
@@ -683,10 +716,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a5" class="requestBtn" onclick="requestPart('A5', 'Rodas')">
+                    <button id="request-btn-a5" class="requestBtn" onclick="requestPart('A5', 'Rodas')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a5" class="stopBtn" onclick="stopRequest('A5', 'Rodas')" disabled>
+                    <button id="stop-btn-a5" class="stopBtn" onclick="stopRequest('A5', 'Rodas')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -705,6 +738,10 @@
             </div>
             
             <div class="content">
+                <div class="carrinho-info" id="carrinho-info-a6" style="display: none;">
+                    <i class="fas fa-car"></i> Trabalhando no Carrinho: <span class="carrinho-id" id="carrinho-id-a6"></span>
+                </div>
+                
                 <div class="status-container">
                     <span class="status-label">Status do Processo</span>
                     <div id="process-status-a6" class="status inactive">
@@ -726,10 +763,10 @@
                 </div>
                 
                 <div class="button-group">
-                    <button id="requestBtn-a6" class="requestBtn" onclick="requestPart('A6', 'Bancos')">
+                    <button id="request-btn-a6" class="requestBtn" onclick="requestPart('A6', 'Bancos')">
                         <i class="fas fa-tools"></i> Solicitar Peça
                     </button>
-                    <button id="stopBtn-a6" class="stopBtn" onclick="stopRequest('A6', 'Bancos')" disabled>
+                    <button id="stop-btn-a6" class="stopBtn" onclick="stopRequest('A6', 'Bancos')" disabled>
                         <i class="fas fa-stop-circle"></i> Parar Solicitação
                     </button>
                 </div>
@@ -745,34 +782,83 @@
     </footer>
 
     <script>
-        const API_BASE = 'https://banco.pythonanywhere.com';
-        const MODEL = '314';
-        let timers = {};
-        let startTimes = {};
-        let alertCheckInterval;
+    const API_BASE = 'https://banco.pythonanywhere.com';
+    const MODEL = '314';
+    let timers = {};
+    let startTimes = {};
+    let currentCarrinhoId = null;
 
-        function showOperator(operatorId) {
-            document.querySelectorAll('[id^="a"]').forEach(page => {
-                page.style.display = 'none';
+    function showOperator(operatorId) {
+        document.querySelectorAll('.operator-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.operator-btn[onclick="showOperator('${operatorId}')"]`).classList.add('active');
+
+        document.querySelectorAll('.operator-page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById(operatorId).classList.add('active');
+
+        checkOperatorStatus(operatorId.replace('a', 'A'));
+    }
+
+    function checkOperatorStatus(operator) {
+        fetch(`${API_BASE}/carrinhos/disponiveis/${operator}?model=${MODEL}`)
+            .then(response => response.json())
+            .then(data => {
+                const startBtn = document.getElementById(`start-process-${operator.toLowerCase()}`);
+
+                if (data.quantidade > 0 || operator === 'A1') {
+                    startBtn.disabled = false;
+                    if (operator === 'A1') {
+                        startBtn.innerHTML = `<i class="fas fa-play-circle"></i> Iniciar Novo Carrinho`;
+                    } else {
+                        startBtn.innerHTML = `<i class="fas fa-play-circle"></i> Iniciar Processo (${data.quantidade} disponíveis)`;
+                    }
+                } else {
+                    startBtn.disabled = true;
+                    startBtn.innerHTML = `<i class="fas fa-play-circle"></i> Iniciar Processo`;
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao verificar status:', error);
             });
-            
-            document.getElementById(operatorId).style.display = 'block';
-        }
+    }
 
-        function startProcess(operator, part) {
-            const data = {
+    function startProcess(operator, part) {
+        let carrinhoId = null;
+
+        let fetchPromise;
+        if (operator !== 'A1') {
+            fetchPromise = fetch(`${API_BASE}/carrinhos/disponiveis/${operator}?model=${MODEL}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.quantidade === 0) {
+                        showMessage(operator, 'Nenhum carrinho disponível para este operador', 'error');
+                        return Promise.reject('Nenhum carrinho disponível');
+                    }
+                    carrinhoId = data.carrinhos_disponiveis[0].id;
+                    return {
+                        model: MODEL,
+                        operator: operator,
+                        part: part,
+                        carrinho_id: carrinhoId
+                    };
+                });
+        } else {
+            fetchPromise = Promise.resolve({
                 model: MODEL,
                 operator: operator,
                 part: part
-            };
-            
-            fetch(`${API_BASE}/process/start`, {
+            });
+        }
+
+        fetchPromise
+            .then(processData => fetch(`${API_BASE}/process/start`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(processData)
+            }))
             .then(response => response.json())
             .then(result => {
                 if (result.error) {
@@ -780,33 +866,41 @@
                 } else {
                     const statusElement = document.getElementById(`process-status-${operator.toLowerCase()}`);
                     statusElement.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo em andamento</span>';
-                    
+                    statusElement.className = 'status active-status';
+
                     document.getElementById(`start-process-${operator.toLowerCase()}`).disabled = true;
                     document.getElementById(`end-process-${operator.toLowerCase()}`).disabled = false;
-                    
+
+                    currentCarrinhoId = result.carrinho_id;
+                    document.getElementById(`carrinho-info-${operator.toLowerCase()}`).style.display = 'block';
+                    document.getElementById(`carrinho-id-${operator.toLowerCase()}`).textContent = `#${result.carrinho_id}`;
+
                     startTimer(operator);
                     showMessage(operator, 'Processo iniciado com sucesso!', 'success');
+
+                    updateAllOperatorsStatus();
                 }
             })
             .catch(error => {
-                showMessage(operator, 'Erro ao iniciar processo: ' + error, 'error');
+                if (error !== 'Nenhum carrinho disponível') {
+                    showMessage(operator, 'Erro ao iniciar processo: ' + error, 'error');
+                }
             });
-        }
+    }
 
-        function endProcess(operator, part) {
-            const data = {
-                model: MODEL,
-                operator: operator,
-                part: part
-            };
-            
-            fetch(`${API_BASE}/process/end`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+    function endProcess(operator, part) {
+        const data = {
+            model: MODEL,
+            operator: operator,
+            part: part,
+            carrinho_id: currentCarrinhoId
+        };
+
+        fetch(`${API_BASE}/process/end`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
             .then(response => response.json())
             .then(result => {
                 if (result.error) {
@@ -814,45 +908,41 @@
                 } else {
                     const statusElement = document.getElementById(`process-status-${operator.toLowerCase()}`);
                     statusElement.innerHTML = '<i class="fas fa-check-circle"></i><span>Processo finalizado</span>';
-                    
+                    statusElement.className = 'status inactive';
+
                     stopTimer(operator);
                     document.getElementById(`end-process-${operator.toLowerCase()}`).disabled = true;
-                    
+
                     showMessage(operator, `Processo finalizado! Duração: ${result.duration.toFixed(2)} segundos`, 'success');
-                    
-                    if (result.next_operator) {
-                        const nextOperator = result.next_operator.toLowerCase();
-                        document.getElementById(`start-process-${nextOperator}`).disabled = false;
-                        const nextStatus = document.getElementById(`process-status-${nextOperator}`);
-                        nextStatus.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo iniciado automaticamente</span>';
-                        startTimer(result.next_operator);
-                    }
+
+                    document.getElementById(`carrinho-info-${operator.toLowerCase()}`).style.display = 'none';
+                    currentCarrinhoId = null;
+
+                    updateAllOperatorsStatus();
                 }
             })
             .catch(error => {
                 showMessage(operator, 'Erro ao finalizar processo: ' + error, 'error');
             });
-        }
+    }
 
-        function requestPart(operator, part) {
-            const data = {
-                model: MODEL,
-                operator: operator,
-                part: part
-            };
-            
-            fetch(`${API_BASE}/alerts`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+    function updateAllOperatorsStatus() {
+        const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
+        operators.forEach(op => checkOperatorStatus(op));
+    }
+
+    function requestPart(operator, part) {
+        const data = { model: MODEL, operator: operator, part: part };
+
+        fetch(`${API_BASE}/alerts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
             .then(response => response.json())
             .then(result => {
-                if (result.error) {
-                    showMessage(operator, result.error, 'error');
-                } else {
+                if (result.error) showMessage(operator, result.error, 'error');
+                else {
                     updateRequestButtons(operator, true);
                     showMessage(operator, 'Solicitação enviada com sucesso!', 'success');
                 }
@@ -860,27 +950,20 @@
             .catch(error => {
                 showMessage(operator, 'Erro ao enviar solicitação: ' + error, 'error');
             });
-        }
+    }
 
-        function stopRequest(operator, part) {
-            const data = {
-                model: MODEL,
-                operator: operator,
-                part: part
-            };
-            
-            fetch(`${API_BASE}/alerts/stop`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+    function stopRequest(operator, part) {
+        const data = { model: MODEL, operator: operator, part: part };
+
+        fetch(`${API_BASE}/alerts/stop`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
             .then(response => response.json())
             .then(result => {
-                if (result.error) {
-                    showMessage(operator, result.error, 'error');
-                } else {
+                if (result.error) showMessage(operator, result.error, 'error');
+                else {
                     updateRequestButtons(operator, false);
                     showMessage(operator, 'Solicitação parada com sucesso!', 'success');
                 }
@@ -888,127 +971,89 @@
             .catch(error => {
                 showMessage(operator, 'Erro ao parar solicitação: ' + error, 'error');
             });
-        }
+    }
 
-        function updateRequestButtons(operator, isRequesting) {
-            const requestBtn = document.getElementById(`requestBtn-${operator.toLowerCase()}`);
-            const stopBtn = document.getElementById(`stopBtn-${operator.toLowerCase()}`);
-            
-            requestBtn.disabled = isRequesting;
-            stopBtn.disabled = !isRequesting;
-        }
+    function updateRequestButtons(operator, isRequesting) {
+        const requestBtn = document.getElementById(`request-btn-${operator.toLowerCase()}`);
+        const stopBtn = document.getElementById(`stop-btn-${operator.toLowerCase()}`);
 
-        function showMessage(operator, text, type) {
-            const messageElement = document.getElementById(`message-${operator.toLowerCase()}`);
-            messageElement.textContent = text;
-            messageElement.style.display = 'block';
-            messageElement.className = `message ${type}`;
-            
-            setTimeout(() => {
-                messageElement.style.display = 'none';
-            }, 5000);
-        }
+        requestBtn.disabled = isRequesting;
+        stopBtn.disabled = !isRequesting;
+    }
 
-        function startTimer(operator) {
-            const timerElement = document.getElementById(`timer-${operator.toLowerCase()}`);
-            timerElement.style.display = 'block';
-            
-            startTimes[operator] = new Date();
-            
-            timers[operator] = setInterval(() => {
-                const now = new Date();
-                const elapsed = Math.floor((now - startTimes[operator]) / 1000);
-                
-                const hours = Math.floor(elapsed / 3600);
-                const minutes = Math.floor((elapsed % 3600) / 60);
-                const seconds = elapsed % 60;
-                
-                timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
-        }
+    function showMessage(operator, text, type) {
+        const messageElement = document.getElementById(`message-${operator.toLowerCase()}`);
+        messageElement.textContent = text;
+        messageElement.className = `message ${type === 'error' ? 'error' : 'success'}`;
+        messageElement.style.display = 'flex';
 
-        function stopTimer(operator) {
-            if (timers[operator]) {
-                clearInterval(timers[operator]);
-                timers[operator] = null;
-            }
-        }
+        setTimeout(() => {
+            messageElement.style.display = 'none';
+        }, 5000);
+    }
 
-        function checkProcessStatus() {
-            fetch(`${API_BASE}/process/status?model=${MODEL}`)
+    function startTimer(operator) {
+        const timerElement = document.getElementById(`timer-${operator.toLowerCase()}`);
+        timerElement.style.display = 'block';
+
+        startTimes[operator] = new Date();
+
+        timers[operator] = setInterval(() => {
+            const now = new Date();
+            const elapsed = Math.floor((now - startTimes[operator]) / 1000);
+
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+
+            timerElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    function stopTimer(operator) {
+        if (timers[operator]) {
+            clearInterval(timers[operator]);
+            timers[operator] = null;
+        }
+    }
+
+    function checkProcessStatus() {
+        fetch(`${API_BASE}/process/status?model=${MODEL}`)
             .then(response => response.json())
             .then(processes => {
                 processes.forEach(process => {
                     const operator = process.operator.toLowerCase();
-                    
+
                     if (process.is_active) {
                         document.getElementById(`process-status-${operator}`).innerHTML = '<i class="fas fa-sync-alt fa-spin"></i><span>Processo em andamento</span>';
+                        document.getElementById(`process-status-${operator}`).className = 'status active-status';
                         document.getElementById(`start-process-${operator}`).disabled = true;
                         document.getElementById(`end-process-${operator}`).disabled = false;
-                        
-                        if (!timers[process.operator]) {
-                            startTimer(process.operator);
-                        }
+
+                        document.getElementById(`carrinho-info-${operator}`).style.display = 'block';
+                        document.getElementById(`carrinho-id-${operator}`).textContent = `#${process.carrinho_id}`;
+
+                        if (!timers[process.operator]) startTimer(process.operator);
                     } else {
-                        document.getElementById(`process-status-${operator}`).innerHTML = '<i class="fas fa-check-circle"></i><span>Processo não iniciado</span>';
+                        document.getElementById(`process-status-${operator}`).innerHTML = '<i class="fas fa-check-circle"></i><span>Processo finalizado</span>';
+                        document.getElementById(`process-status-${operator}`).className = 'status inactive';
+                        document.getElementById(`start-process-${operator}`).disabled = false;
                         document.getElementById(`end-process-${operator}`).disabled = true;
-                        
-                        if (process.operator === 'A1') {
-                            document.getElementById(`start-process-${operator}`).disabled = false;
-                        } else {
-                            const prevOperator = getPreviousOperator(process.operator);
-                            const prevProcess = processes.find(p => p.operator === prevOperator);
-                            if (prevProcess && prevProcess.is_active) {
-                                document.getElementById(`start-process-${operator}`).disabled = false;
-                            }
-                        }
+
+                        document.getElementById(`carrinho-info-${operator}`).style.display = 'none';
+                        stopTimer(process.operator);
                     }
                 });
             })
-            .catch(error => {
-                console.error('Erro ao verificar status dos processos:', error);
-            });
-        }
+            .catch(error => console.error('Erro ao atualizar status dos processos:', error));
+    }
 
-        function checkAlertsStatus() {
-            fetch(`${API_BASE}/alerts?model=${MODEL}`)
-            .then(response => response.json())
-            .then(alerts => {
-                // Reset all request buttons first
-                ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'].forEach(op => {
-                    updateRequestButtons(op.toUpperCase(), false);
-                });
-                
-                // Update buttons for operators with active alerts
-                alerts.forEach(alert => {
-                    if (alert.model === MODEL) {
-                        updateRequestButtons(alert.operator, true);
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao verificar status dos alertas:', error);
-            });
-        }
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', function() {
+        updateAllOperatorsStatus();
+        setInterval(checkProcessStatus, 5000);
+    });
+</script>
 
-        function getPreviousOperator(operator) {
-            const operators = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6'];
-            const index = operators.indexOf(operator);
-            return index > 0 ? operators[index - 1] : null;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            checkProcessStatus();
-            checkAlertsStatus();
-            
-            setInterval(checkProcessStatus, 5000);
-            alertCheckInterval = setInterval(checkAlertsStatus, 3000);
-        });
-
-        // Clean up intervals when page is closed
-        window.addEventListener('beforeunload', function() {
-            clearInterval(alertCheckInterval);
-        });
-    </script>
 </body>
 </html>
